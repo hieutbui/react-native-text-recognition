@@ -11,13 +11,13 @@ I do not do much React Native anymore, so this project is largely unmaintained. 
 ## Installation
 
 ```sh
-yarn add react-native-text-recognition
+yarn add react-native-text-recognition-plus
 ```
 
 or with NPM:
 
 ```sh
-npm install react-native-text-recognition
+npm install react-native-text-recognition-plus
 ```
 
 <hr>
@@ -39,7 +39,7 @@ This error is most common on XCode 12+
 ## Usage
 
 ```js
-import TextRecognition from 'react-native-text-recognition';
+import TextRecognition from 'react-native-text-recognition-plus';
 
 // pass the image's path to recognize
 

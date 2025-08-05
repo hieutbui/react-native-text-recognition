@@ -5,7 +5,7 @@ This example shows how to use the updated text recognition API that includes pos
 ## Basic Usage
 
 ```typescript
-import TextRecognition, { TextRecognitionResult } from 'react-native-text-recognition';
+import TextRecognition, { TextRecognitionResult } from 'react-native-text-recognition-plus';
 
 async function recognizeTextWithPosition(imagePath: string) {
   try {

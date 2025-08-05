@@ -1,5 +1,5 @@
 {
-  "name": "react-native-text-recognition",
+  "name": "react-native-text-recognition-plus",
   "version": "2.0.0",
   "description": "text recognition utilizing the Vision framework on iOS and Firebase ML on Android with position information",
   "main": "lib/commonjs/index",
@@ -37,7 +37,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/hieutbui/react-native-text-recognition",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hieutbui/react-native-text-recognition.git"
+  },
   "author": "Hieu Bui <hieutbui@users.noreply.github.com> (https://github.com/hieutbui)",
   "license": "MIT",
   "bugs": {
