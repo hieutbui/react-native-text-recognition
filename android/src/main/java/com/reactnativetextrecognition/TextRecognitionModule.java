@@ -9,12 +9,15 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.module.annotations.ReactModule;
 
 // Deps
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.util.Log;
 import java.io.IOException;
 
@@ -67,7 +70,20 @@ public class TextRecognitionModule extends ReactContextBaseJavaModule {
                 WritableArray textBlocks = new WritableNativeArray();
 
                 for (Text.TextBlock block : visionText.getTextBlocks()) {
-                  textBlocks.pushString(block.getText());
+                  WritableMap textBlock = new WritableNativeMap();
+                  textBlock.putString("text", block.getText());
+                  
+                  Rect boundingBox = block.getBoundingBox();
+                  if (boundingBox != null) {
+                    WritableMap position = new WritableNativeMap();
+                    position.putInt("x", boundingBox.left);
+                    position.putInt("y", boundingBox.top);
+                    position.putInt("width", boundingBox.width());
+                    position.putInt("height", boundingBox.height());
+                    textBlock.putMap("position", position);
+                  }
+                  
+                  textBlocks.pushMap(textBlock);
                 }
 
                 promise.resolve(textBlocks);

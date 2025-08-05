@@ -44,7 +44,37 @@ import TextRecognition from 'react-native-text-recognition';
 // pass the image's path to recognize
 
 const result = await TextRecognition.recognize('/var/mobile/...');
+
+// result will be an array of objects with text and position information:
+// [
+//   {
+//     text: "Hello World",
+//     position: { x: 100, y: 200, width: 150, height: 30 }
+//   },
+//   {
+//     text: "Another line",
+//     position: { x: 100, y: 250, width: 200, height: 30 }
+//   }
+// ]
 ```
+
+### Result Format
+
+The `recognize` function returns a `Promise<TextRecognitionResult[]>` where each result contains:
+
+```ts
+type TextRecognitionResult = {
+  text: string;           // The recognized text
+  position: {
+    x: number;           // X coordinate of the text bounding box
+    y: number;           // Y coordinate of the text bounding box  
+    width: number;       // Width of the text bounding box
+    height: number;      // Height of the text bounding box
+  };
+};
+```
+
+**Note:** Position coordinates are in the coordinate system of the source image. On iOS, coordinates are normalized (0.0 to 1.0), while on Android they are in pixels.
 
 ### Configuration and Options
 
@@ -73,3 +103,7 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
+
+## Acknowledgments
+
+This package is forked from [react-native-text-recognition](https://github.com/JoeyEamigh/react-native-text-recognition) by Joey Eamigh. The original package provided basic text recognition functionality. This fork adds position information for recognized text and is maintained by Hieu Bui.

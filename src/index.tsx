@@ -4,11 +4,21 @@ export type TextRecognitionOptions = {
   visionIgnoreThreshold?: number;
 };
 
+export type TextRecognitionResult = {
+  text: string;
+  position: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+};
+
 type TextRecognitionType = {
   recognize(
     imagePath: string,
     options?: TextRecognitionOptions
-  ): Promise<string[]>;
+  ): Promise<TextRecognitionResult[]>;
 };
 
 const { TextRecognition } = NativeModules;
@@ -16,7 +26,7 @@ const { TextRecognition } = NativeModules;
 async function recognize(
   imagePath: string,
   options?: TextRecognitionOptions
-): Promise<string[]> {
+): Promise<TextRecognitionResult[]> {
   return await TextRecognition.recognize(imagePath, options || {});
 }
 

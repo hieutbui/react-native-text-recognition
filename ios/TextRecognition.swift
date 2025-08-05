@@ -43,21 +43,28 @@ class TextRecognition: NSObject {
   func recognizeTextHandler(request: VNRequest, threshold: Float, error _: Error?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     guard let observations = request.results as? [VNRecognizedTextObservation] else { reject("ERR", "No text recognized.", nil); return }
 
-//    let recognizedStrings = observations.compactMap { observation in
-//      ["text": observation.topCandidates(1).first?.string as Any, "confidence": observation.topCandidates(1).first?.confidence as Any]
-//    }
-
-    let recognizedStrings = observations.compactMap { observation -> String? in
-      if observation.topCandidates(1).first?.confidence ?? 0 >= threshold {
-        return observation.topCandidates(1).first?.string
-      } else {
+    let recognizedResults = observations.compactMap { observation -> [String: Any]? in
+      guard let topCandidate = observation.topCandidates(1).first,
+            topCandidate.confidence >= threshold else {
         return nil
       }
+      
+      let boundingBox = observation.boundingBox
+      
+      return [
+        "text": topCandidate.string,
+        "position": [
+          "x": boundingBox.origin.x,
+          "y": boundingBox.origin.y,
+          "width": boundingBox.size.width,
+          "height": boundingBox.size.height
+        ]
+      ]
     }
 
     // Debug
-    // print(recognizedStrings)
+    // print(recognizedResults)
 
-    resolve(recognizedStrings)
+    resolve(recognizedResults)
   }
 }
